@@ -20,13 +20,12 @@ var allEnemies;
 function getLaneNumber() {
     // The lane numbers that can be chosen are 
     // 0, 1 and 2. 
-    return Math.floor(Math.random() * numberOfLanes)  
+    return Math.floor(Math.random() * numberOfLanes)
 }
 
 function initializeObjects() {
     player = new Player();
-    allEnemies = [new Enemy(), new Enemy(), new Enemy()
-    ];
+    allEnemies = [new Enemy(), new Enemy(), new Enemy()];
 }
 
 function getRandomSpeed() {
@@ -40,7 +39,7 @@ var Enemy = function () {
     this.speed = getRandomSpeed();
 };
 
-Enemy.prototype.resetEnemyLocationIfOffScreen = function() {
+Enemy.prototype.resetEnemyLocationIfOffScreen = function () {
     if (this.x >= canvas.width) {
         this.x = startLocationXEnemy;
         this.y = boundaryWater + getLaneNumber() * incrementY;
