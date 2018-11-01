@@ -7,7 +7,9 @@ const incrementY = 83;
 const startLocationXPlayer = 202;
 const startLocationYPlayer = 50 + (4 * 83);
 const startLocationXEnemy = -101;
+const collisionSensitivity = 0.70;
 const boundaryWater = 50;
+const boundaryBottomBoard = 382;
 const maxSpeed = 600;
 const minSpeed = 100;
 const numberOfLanes = 3
@@ -23,9 +25,7 @@ function getLaneNumber() {
 
 function initializeObjects() {
     player = new Player();
-    allEnemies = [new Enemy(50),
-        new Enemy(50 + 83),
-        new Enemy(50 + 2 * 83)
+    allEnemies = [new Enemy(), new Enemy(), new Enemy()
     ];
 }
 
@@ -33,14 +33,14 @@ function getRandomSpeed() {
     return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
 }
 
-var Enemy = function (y) {
+var Enemy = function () {
     this.sprite = 'images/enemy-bug.png';
     this.x = startLocationXEnemy;
     this.y = boundaryWater + getLaneNumber() * incrementY;
     this.speed = getRandomSpeed();
 };
 
-Enemy.prototype.resetLocationIfOffScreen = function() {
+Enemy.prototype.resetEnemyLocationIfOffScreen = function() {
     if (this.x >= canvas.width) {
         this.x = startLocationXEnemy;
         this.y = boundaryWater + getLaneNumber() * incrementY;
@@ -49,7 +49,7 @@ Enemy.prototype.resetLocationIfOffScreen = function() {
 
 Enemy.prototype.resetGameIfCollisionDetected = function () {
     if (Math.abs(this.y - player.y) < incrementY) {
-        if (Math.abs(this.x - player.x) <= 0.75 * incrementX) {
+        if (Math.abs(this.x - player.x) <= collisionSensitivity * incrementX) {
             initializeObjects();
         }
     }
@@ -59,7 +59,7 @@ Enemy.prototype.update = function (dt) {
     this.x += this.speed * dt;
     this.y = this.y;
     this.resetGameIfCollisionDetected();
-    this.resetLocationIfOffScreen();
+    this.resetEnemyLocationIfOffScreen();
 };
 
 Enemy.prototype.render = function () {
@@ -105,7 +105,7 @@ Player.prototype.canPlayerMoveRight = function () {
 }
 
 Player.prototype.canPlayerMoveInDown = function () {
-    if (this.y + incrementY > 382) {
+    if (this.y + incrementY > boundaryBottomBoard) {
         return false;
     }
     return true;
