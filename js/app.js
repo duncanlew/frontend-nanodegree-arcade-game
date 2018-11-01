@@ -4,35 +4,42 @@
 // increments in either the X or Y direction.
 const incrementX = 101;
 const incrementY = 83;
-const startingX = 202;
-const startingY = 50 + (4 * 83);
+const startLocationXPlayer = 202;
+const startLocationYPlayer = 50 + (4 * 83);
+const startLocationXEnemy = -101;
 const boundaryWater = 50;
+const maxSpeed = 600;
+const minSpeed = 100;
 
 var player;
 var allEnemies;
 
 function initializeObjects() {
     player = new Player();
-    allEnemies = [new Enemy(-101, 50),
-        new Enemy(0, 50 + 83),
-        new Enemy(0, 50 + 2 * 83)
+    allEnemies = [new Enemy(50),
+        new Enemy(50 + 83),
+        new Enemy(50 + 2 * 83)
     ];
 }
 
-var Enemy = function (x, y) {
+function getRandomSpeed() {
+    return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+}
+
+var Enemy = function (y) {
     this.sprite = 'images/enemy-bug.png';
-    this.x = x;
+    this.x = startLocationXEnemy;
     this.y = y;
-    this.speed = 10;
+    this.speed = getRandomSpeed();
 };
 
-Enemy.prototype.resetGameIfCollisionDetected = function() {
-if ( Math.abs(this.y - player.y) < incrementY ) {
-    if (Math.abs(this.x - player.x) <= 0.75*incrementX) {
-        console.log("Collision!");
-        initializeObjects();
+Enemy.prototype.resetGameIfCollisionDetected = function () {
+    if (Math.abs(this.y - player.y) < incrementY) {
+        if (Math.abs(this.x - player.x) <= 0.75 * incrementX) {
+            console.log("Collision!");
+            initializeObjects();
+        }
     }
-}
 };
 
 Enemy.prototype.update = function (dt) {
@@ -47,8 +54,8 @@ Enemy.prototype.render = function () {
 
 var Player = function () {
     this.sprite = 'images/char-boy.png';
-    this.x = startingX;
-    this.y = startingY;
+    this.x = startLocationXPlayer;
+    this.y = startLocationYPlayer;
     this.deltaX = 0;
     this.deltaY = 0;
 }
@@ -65,8 +72,8 @@ Player.prototype.render = function () {
 };
 
 Player.prototype.reset = function () {
-    this.x = startingX;
-    this.y = startingY;
+    this.x = startLocationXPlayer;
+    this.y = startLocationYPlayer;
 }
 
 Player.prototype.canPlayerMoveLeft = function () {
