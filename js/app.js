@@ -33,6 +33,12 @@ var Enemy = function (y) {
     this.speed = getRandomSpeed();
 };
 
+Enemy.prototype.resetLocationIfOffScreen = function() {
+    if (this.x >= canvas.width) {
+        this.x = startLocationXEnemy;
+    }
+}
+
 Enemy.prototype.resetGameIfCollisionDetected = function () {
     if (Math.abs(this.y - player.y) < incrementY) {
         if (Math.abs(this.x - player.x) <= 0.75 * incrementX) {
@@ -46,6 +52,7 @@ Enemy.prototype.update = function (dt) {
     this.x += this.speed * dt;
     this.y = this.y;
     this.resetGameIfCollisionDetected();
+    this.resetLocationIfOffScreen();
 };
 
 Enemy.prototype.render = function () {
