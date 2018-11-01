@@ -1,3 +1,12 @@
+// Constants that are used for the
+// starting location and movement of the player.
+// Movement of the player is performed in
+// increments in either the X or Y direction.
+const incrementX = 101;
+const incrementY = 83;
+const startingX = 202;
+const startingY = 50 + (4*83);
+
 var Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
@@ -17,8 +26,8 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 202;
-    this.y = 50 + (4*83);
+    this.x = startingX;
+    this.y = startingY;
     this.deltaX = 0;
     this.deltaY = 0;
 }
@@ -36,19 +45,19 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(inputKeyString) {
     switch(inputKeyString) {
         case 'left':
-            this.deltaX = -101;
+            this.deltaX = -incrementX;
             break;
 
         case 'up':
-            this.deltaY = -83;
+            this.deltaY = -incrementY;
             break;
 
         case 'right':
-            this.deltaX = 101;
+            this.deltaX = incrementX;
             break;
 
         case 'down':
-            this.deltaY = 83;
+            this.deltaY = incrementY;
             break;
     }
 };
