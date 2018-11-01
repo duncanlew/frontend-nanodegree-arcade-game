@@ -1,5 +1,5 @@
 // Constants that are used for the
-// starting location and movement of the player.
+// starting location and movements of the player.
 // Movement of the player is performed in
 // increments in either the X or Y direction.
 const incrementX = 101;
@@ -18,7 +18,14 @@ var Enemy = function (x, y) {
 Enemy.prototype.update = function (dt) {
     this.x += this.speed * dt;
     this.y = this.y;
+
     //HANDLE COLLISION WITH PLAYER
+    // Check if player is in the same lane as enemy
+    if ( Math.abs(this.y - player.y) < incrementY ) {
+        if (Math.abs(this.x - player.x) <= 0.75*incrementX) {
+            console.log("Collision!");
+        }
+    }
 };
 
 Enemy.prototype.render = function () {
@@ -77,8 +84,6 @@ Player.prototype.resetLocationIfPlayerWins = function () {
 }
 
 Player.prototype.handleInput = function (inputKeyString) {
-    console.log("Player x: " + this.x);
-    console.log("Player y: " + this.y);
     switch (inputKeyString) {
         case 'left':
             if (this.canPlayerMoveLeft()) {
