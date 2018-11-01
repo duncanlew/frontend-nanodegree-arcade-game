@@ -3,3 +3,5 @@ frontend-nanodegree-arcade-game
 
 The goal of the project is to create a web-based arcade game using Javascript. 
 In order to run the game, download or close the repository and then open index.html in your preferred browser.
+
+A character and enemies appear on the board. In order to win, the character has to move all the way up to the water block without touching the enemies that are moving across the board. The character can be moved with the arrow keys.
