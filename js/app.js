@@ -8,6 +8,17 @@ const startingX = 202;
 const startingY = 50 + (4 * 83);
 const boundaryWater = 50;
 
+var player;
+var allEnemies;
+
+function initializeObjects() {
+    player = new Player();
+    allEnemies = [new Enemy(-101, 50),
+        new Enemy(0, 50 + 83),
+        new Enemy(0, 50 + 2 * 83)
+    ];
+}
+
 var Enemy = function (x, y) {
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
@@ -24,6 +35,7 @@ Enemy.prototype.update = function (dt) {
     if ( Math.abs(this.y - player.y) < incrementY ) {
         if (Math.abs(this.x - player.x) <= 0.75*incrementX) {
             console.log("Collision!");
+            initializeObjects();
         }
     }
 };
@@ -109,11 +121,7 @@ Player.prototype.handleInput = function (inputKeyString) {
     }
 };
 
-var player = new Player();
-var allEnemies = [new Enemy(-101, 50),
-    new Enemy(0, 50 + 83),
-    new Enemy(0, 50 + 2 * 83)
-];
+initializeObjects();
 
 document.addEventListener('keyup', function (e) {
     var allowedKeys = {
