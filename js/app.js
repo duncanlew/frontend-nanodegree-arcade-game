@@ -10,9 +10,16 @@ const startLocationXEnemy = -101;
 const boundaryWater = 50;
 const maxSpeed = 600;
 const minSpeed = 100;
+const numberOfLanes = 3
 
 var player;
 var allEnemies;
+
+function getLaneNumber() {
+    // The lane numbers that can be chosen are 
+    // 0, 1 and 2. 
+    return Math.floor(Math.random() * numberOfLanes)  
+}
 
 function initializeObjects() {
     player = new Player();
@@ -29,20 +36,20 @@ function getRandomSpeed() {
 var Enemy = function (y) {
     this.sprite = 'images/enemy-bug.png';
     this.x = startLocationXEnemy;
-    this.y = y;
+    this.y = boundaryWater + getLaneNumber() * incrementY;
     this.speed = getRandomSpeed();
 };
 
 Enemy.prototype.resetLocationIfOffScreen = function() {
     if (this.x >= canvas.width) {
         this.x = startLocationXEnemy;
+        this.y = boundaryWater + getLaneNumber() * incrementY;
     }
 }
 
 Enemy.prototype.resetGameIfCollisionDetected = function () {
     if (Math.abs(this.y - player.y) < incrementY) {
         if (Math.abs(this.x - player.x) <= 0.75 * incrementX) {
-            console.log("Collision!");
             initializeObjects();
         }
     }
