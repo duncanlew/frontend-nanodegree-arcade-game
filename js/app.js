@@ -26,18 +26,19 @@ var Enemy = function (x, y) {
     this.speed = 10;
 };
 
+Enemy.prototype.resetGameIfCollisionDetected = function() {
+if ( Math.abs(this.y - player.y) < incrementY ) {
+    if (Math.abs(this.x - player.x) <= 0.75*incrementX) {
+        console.log("Collision!");
+        initializeObjects();
+    }
+}
+};
+
 Enemy.prototype.update = function (dt) {
     this.x += this.speed * dt;
     this.y = this.y;
-
-    //HANDLE COLLISION WITH PLAYER
-    // Check if player is in the same lane as enemy
-    if ( Math.abs(this.y - player.y) < incrementY ) {
-        if (Math.abs(this.x - player.x) <= 0.75*incrementX) {
-            console.log("Collision!");
-            initializeObjects();
-        }
-    }
+    this.resetGameIfCollisionDetected();
 };
 
 Enemy.prototype.render = function () {
