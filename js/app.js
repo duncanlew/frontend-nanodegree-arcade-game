@@ -6,6 +6,7 @@ const incrementX = 101;
 const incrementY = 83;
 const startingX = 202;
 const startingY = 50 + (4 * 83);
+const boundaryWater = 50;
 
 var Enemy = function (x, y) {
     this.sprite = 'images/enemy-bug.png';
@@ -36,8 +37,7 @@ Player.prototype.update = function (deltaX, deltaY) {
     this.y += this.deltaY;
     this.deltaX = 0;
     this.deltaY = 0;
-    //console.log("Player x: "+ this.x);
-    //console.log("Player y: "+ this.y);
+    this.resetLocationIfPlayerWins();
 };
 
 Player.prototype.render = function () {
@@ -52,7 +52,7 @@ Player.prototype.reset = function () {
 Player.prototype.canPlayerMoveLeft = function () {
     if (this.x < incrementX) {
         return false;
-    } 
+    }
     return true;
 }
 
@@ -70,9 +70,15 @@ Player.prototype.canPlayerMoveInDown = function () {
     return true;
 }
 
+Player.prototype.resetLocationIfPlayerWins = function () {
+    if (this.y < boundaryWater) {
+        this.reset();
+    }
+}
+
 Player.prototype.handleInput = function (inputKeyString) {
-    console.log("Player x: "+ this.x);
-    console.log("Player y: "+ this.y);
+    console.log("Player x: " + this.x);
+    console.log("Player y: " + this.y);
     switch (inputKeyString) {
         case 'left':
             if (this.canPlayerMoveLeft()) {
@@ -91,12 +97,11 @@ Player.prototype.handleInput = function (inputKeyString) {
             break;
 
         case 'down':
-        if (this.canPlayerMoveInDown()) {
-            this.deltaY = incrementY;
-        }
+            if (this.canPlayerMoveInDown()) {
+                this.deltaY = incrementY;
+            }
             break;
     }
-    console.log(inputKeyString);
 };
 
 var player = new Player();
