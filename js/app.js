@@ -1,4 +1,5 @@
-// Constants that defined for the 
+'use strict';
+// Constants that are defined for the 
 // locations, boundaries and other properties of the game
 const incrementX = 101;
 const incrementY = 83;
@@ -12,8 +13,8 @@ const maxSpeed = 600;
 const minSpeed = 100;
 const numberOfLanes = 3
 
-var player;
-var allEnemies;
+let player;
+let allEnemies;
 
 // Get the lane number in which the enemy will appear
 // The lane numbers that can be chosen are 0, 1 and 2. 
@@ -82,6 +83,7 @@ var Player = function () {
     this.deltaX = 0;
     this.deltaY = 0;
 }
+
 Player.prototype.update = function (deltaX, deltaY) {
     this.x += this.deltaX;
     this.y += this.deltaY;
@@ -104,28 +106,19 @@ Player.prototype.reset = function () {
 // Check whether the player object can move left
 // This is done to prevent player from moving off screen
 Player.prototype.canPlayerMoveLeft = function () {
-    if (this.x < incrementX) {
-        return false;
-    }
-    return true;
+    return this.x >= incrementX;
 }
 
 // Check whether the player object can move right
 // This is done to prevent player from moving off screen
 Player.prototype.canPlayerMoveRight = function () {
-    if (this.x + incrementX >= canvas.width) {
-        return false;
-    }
-    return true;
+    return this.x + incrementX < canvas.width;
 }
 
 // Check whether the player object can move down
 // This is done to prevent player from moving off screen
-Player.prototype.canPlayerMoveInDown = function () {
-    if (this.y + incrementY > boundaryBottomBoard) {
-        return false;
-    }
-    return true;
+Player.prototype.canPlayerMoveDown = function () {
+    return this.y + incrementY <= boundaryBottomBoard;
 }
 
 // Check whether the player object can move up
@@ -155,7 +148,7 @@ Player.prototype.handleInput = function (inputKeyString) {
             break;
 
         case 'down':
-            if (this.canPlayerMoveInDown()) {
+            if (this.canPlayerMoveDown()) {
                 this.deltaY = incrementY;
             }
             break;
