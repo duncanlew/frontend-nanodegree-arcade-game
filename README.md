@@ -2,6 +2,7 @@ Arcade Game: Frogger
 ===============================
 
 As part of the Front-End Web Developer Nano program, a web-based arcade game called Frogger is created using Javascript. A character and enemies will appear on the board. In order to win, the player has to move the character all the way up to the water block without touching the enemies that are moving across the board. The character can be moved with the arrow keys.
+![Screenshot of the game](images/screenshot-game.png)
 
 # Quick start
 ## Install
